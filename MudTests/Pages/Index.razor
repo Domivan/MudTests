@@ -12,7 +12,10 @@ Welcome to your new app.
 <MudButton Variant="Variant.Text" Color="MudBlazor.Color.Error" OnClick="@ShowDialog">Show Dialog</MudButton>
 <MudButton Variant="Variant.Text" Color="MudBlazor.Color.Info" OnClick="@UpdateSeries">Update Series</MudButton>
 <MudButton Variant="Variant.Text" Color="MudBlazor.Color.Info" OnClick="@ResetSeries">Reset Series</MudButton>
-
+ @foreach(var item in ShowData)
+            {
+                <div>@item.Revenue</div>
+            }
 <ApexChart TItem="MyData" Height="@("100%")" @ref="@chart"
            Title="Sample Data">
 
@@ -60,18 +63,16 @@ Welcome to your new app.
 
     private async Task ShowDialog()
     {
-        Update dlg = UpdateSeries;
-        var param = new DialogParameters<MyDialog>();
-        param.Add(x => x.dlg, dlg);
+        //Update dlg = UpdateSeries;
+        //var param = new DialogParameters<MyDialog>();
+        //param.Add(x => x.dlg, dlg);
 
-        var dialog = await DialogService.ShowAsync<MyDialog>("Some Action", param);
-        var result = await dialog.Result;
+        //var dialog = await DialogService.ShowAsync<MyDialog>("Some Action", param);
+        //var result = await dialog.Result;
 
-        if(!result.Canceled)
-        {
-            var a = result.Data as Update;
-            await a();
-        }
+        await Task.Delay(1000);
+        ShowData = Data.Take(GetRandom).ToList();
+        await chart.UpdateSeriesAsync(true);
     }
 
     private async Task UpdateSeries()
