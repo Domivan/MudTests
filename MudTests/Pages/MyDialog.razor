@@ -1,0 +1,17 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudAlert>При первом закрытии диалога коллекция по-прежнему отображается полностью. А если вызвать его повторно тогда норм. Почему?</MudAlert>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="MudBlazor.Color.Error" OnClick="Submit">Sumbit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+
+    private void Submit()
+    {
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+}
