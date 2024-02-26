@@ -66,6 +66,12 @@ Welcome to your new app.
 
         var dialog = await DialogService.ShowAsync<MyDialog>("Some Action", param);
         var result = await dialog.Result;
+
+        if(!result.Canceled)
+        {
+            var a = result.Data as Update;
+            await a();
+        }
     }
 
     private async Task UpdateSeries()
