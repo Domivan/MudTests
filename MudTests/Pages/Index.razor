@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject IDialogService DialogService
+
 
 <PageTitle>Index</PageTitle>
 
@@ -8,14 +8,10 @@
 Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+<button class="btn btn-primary" @onclick="UpdateSeriesDelay">Update with Delay</button>
+<button class="btn btn-primary" @onclick="UpdateSeries">Update</button>
+<button class="btn btn-primary" @onclick="ResetSeries">Reset</button>
 
-<MudButton Variant="Variant.Text" Color="MudBlazor.Color.Error" OnClick="@ShowDialog">Show Dialog</MudButton>
-<MudButton Variant="Variant.Text" Color="MudBlazor.Color.Info" OnClick="@UpdateSeries">Update Series</MudButton>
-<MudButton Variant="Variant.Text" Color="MudBlazor.Color.Info" OnClick="@ResetSeries">Reset Series</MudButton>
- @foreach(var item in ShowData)
-            {
-                <div>@item.Revenue</div>
-            }
 <ApexChart TItem="MyData" Height="@("100%")" @ref="@chart"
            Title="Sample Data">
 
@@ -61,16 +57,10 @@ Welcome to your new app.
 
     private int GetRandom => new Random().Next(1, 12);
 
-    private async Task ShowDialog()
+    private async Task UpdateSeriesDelay()
     {
-        //Update dlg = UpdateSeries;
-        //var param = new DialogParameters<MyDialog>();
-        //param.Add(x => x.dlg, dlg);
-
-        //var dialog = await DialogService.ShowAsync<MyDialog>("Some Action", param);
-        //var result = await dialog.Result;
-
-        await Task.Delay(1000);
+        await Task.Delay(10); // this blocks first chart update
+        
         ShowData = Data.Take(GetRandom).ToList();
         await chart.UpdateSeriesAsync(true);
     }
