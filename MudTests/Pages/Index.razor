@@ -35,13 +35,6 @@ Welcome to your new app.
 
     protected ApexChart<MyData> chart;
 
-    public class MyData
-    {
-        public string Category { get; set; }
-        public int NetProfit { get; set; }
-        public int Revenue { get; set; }
-    }
-
     private List<MyData> Data { get; set; } = new();
     private List<MyData> ShowData { get; set; } = new();
 
@@ -67,14 +60,12 @@ Welcome to your new app.
 
     private async Task ShowDialog()
     {
-        var dialog = await DialogService.ShowAsync<MyDialog>("Some Action");
-        var result = await dialog.Result;
+        Update dlg = UpdateSeries;
+        var param = new DialogParameters<MyDialog>();
+        param.Add(x => x.dlg, dlg);
 
-        if (!result.Canceled)
-        {
-            ShowData = Data.Take(GetRandom).ToList();
-            await chart.UpdateSeriesAsync(true);
-        }
+        var dialog = await DialogService.ShowAsync<MyDialog>("Some Action", param);
+        var result = await dialog.Result;
     }
 
     private async Task UpdateSeries()

@@ -9,9 +9,11 @@
 
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public Update dlg { get; set; }
 
-    private void Submit()
+    private async Task Submit()
     {
+        await dlg();
         MudDialog.Close(DialogResult.Ok(true));
     }
 }
